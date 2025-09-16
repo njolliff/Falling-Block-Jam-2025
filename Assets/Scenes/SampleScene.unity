@@ -596,9 +596,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 534bce81906312241806a33ec6089759, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  spawnInterval: 1.5
+  spawnInterval: 1
   hazardousBlockChance: 0
-  blockFallSpeedRange: {x: 1, y: 3}
+  blockFallSpeedRange: {x: 2, y: 5}
 --- !u!4 &1189175069
 Transform:
   m_ObjectHideFlags: 0
