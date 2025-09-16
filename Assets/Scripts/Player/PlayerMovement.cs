@@ -140,8 +140,8 @@ public class PlayerMovement : MonoBehaviour
         if (_collider == null) return; // Collider null check
 
         // Calculate the origins of upper and lower raycasts
-        Vector2 upperRayOrigin = new(_collider.bounds.center.x, _collider.bounds.center.y + _collider.bounds.size.y / 4);
-        Vector2 lowerRayOrigin = new(_collider.bounds.center.x, _collider.bounds.center.y - _collider.bounds.size.y / 4);
+        Vector2 upperRayOrigin = new(_collider.bounds.center.x, _collider.bounds.center.y + _collider.bounds.size.y / 2.5f);
+        Vector2 lowerRayOrigin = new(_collider.bounds.center.x, _collider.bounds.center.y - _collider.bounds.size.y / 2.5f);
 
         // Determine the rays' direction and set their length
         Vector2 rayDirection = facingRight ? Vector2.right : Vector2.left;
