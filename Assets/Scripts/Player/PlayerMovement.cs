@@ -236,25 +236,20 @@ public class PlayerMovement : MonoBehaviour
         Vector2 strongestInput = new(0, 0);
 
         // Ensure the player is inputting a direction
-        if (input == Vector2.zero)
-            return strongestInput;
+        if (input == Vector2.zero) return strongestInput;
 
         // If on a controller, determine if the player is more strongly inputting on the Y axis or X axis, then set that axis to 1/-1
         // If they are input at equal strength, favor the X axis
         if (_playerInput.currentControlScheme == "Gamepad" || _playerInput.currentControlScheme == "XR")
         {
-            if (Mathf.Abs(input.y) > Mathf.Abs(input.x))
-                strongestInput.y = (input.y > 0) ? 1 : -1;
-            else
-                strongestInput.x = (input.x > 0) ? 1 : -1;
+            if (Mathf.Abs(input.y) > Mathf.Abs(input.x)) strongestInput.y = (input.y > 0) ? 1 : -1;
+            else strongestInput.x = (input.x > 0) ? 1 : -1;
         }
         // If on KBM, input strength is always -1, 0, or 1, so favor the Y axis to allow the player to use Up/Down attacks while moving left/right
         else if (_playerInput.currentControlScheme == "KeyboardMouse")
         {
-            if (input.y != 0)
-                strongestInput.y = (input.y > 0) ? 1 : -1;
-            else
-                strongestInput.x = (input.x > 0) ? 1 : -1;
+            if (input.y != 0) strongestInput.y = (input.y > 0) ? 1 : -1;
+            else strongestInput.x = (input.x > 0) ? 1 : -1;
         }
 
         return strongestInput;
@@ -264,7 +259,7 @@ public class PlayerMovement : MonoBehaviour
     #region Input Functions
     public void OnMove(InputValue inputValue)
     {
-        // Get the raw float input
+        // Get the raw Vector2 input
         Vector2 rawInput = inputValue.Get<Vector2>();
 
         // Flatten the input to -1, 0, or 1 and determine the strongest input for determining attack direction

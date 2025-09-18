@@ -1,60 +1,61 @@
+using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    #region Variables
+    // PUBLIC
     public static PlayerController Instance { get; private set; }
+    [NonSerialized] public float maxHealth;
     public float health = 3;
     public float height = 0;
     public bool isAlive = true;
 
-    [SerializeField] private Collider2D _physicsCollider;
-    private float _startingHeight;
+    // PRIVATE
+    private Vector3 _startingPos;
+    #endregion
 
+    #region Initialization / Destruction
     void Awake()
     {
         // Singleton
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
 
-        // Set starting height at the player's feet
-        float playerHeight = _physicsCollider.bounds.size.y;
-        _startingHeight = transform.position.y - (playerHeight / 2);
-    }
+        // Set starting position
+        _startingPos = transform.position;
 
+        // Set max health
+        maxHealth = health;
+    }
     void OnDestroy()
     {
         // Singleton
         if (Instance == this) Instance = null;
     }
+    #endregion
 
+    #region Main
     void Update()
     {
-        // Update height
-        height = transform.position.y - _startingHeight;
-
-        // Check if the player has fallen below the screen
-        CheckScreenHeight();
+        // Update height variable and check that player is not below the starting point
+        UpdateHeight();
     }
+    #endregion
 
-    private void CheckScreenHeight()
+    #region Helper Methods
+    private void UpdateHeight()
     {
-        // Get the position of the center top of the player's physics collider
-        Vector3 topPos = _physicsCollider.bounds.center + Vector3.up * (_physicsCollider.bounds.size.y / 2);
+        // Update height, rounded to one decimal place
+        height = Mathf.Round((transform.position.y - _startingPos.y) * 10) / 10;
 
-        // Get the topPos relative to the main camera's viewport
-        Vector3 topViewportPos = Camera.main.WorldToViewportPoint(topPos);
-
-        // If below the screen, the player is dead
-        if (topViewportPos.y <= 0) KillPlayer();
+        // Check if the player has fallen bellow the starting position, with a small amount of leeway
+        if (height <= -1) GameManager.Instance.KillPlayer();
     }
 
-    private void KillPlayer()
+    public void ResetPosition()
     {
-        Time.timeScale = 0; // Pause the game
-
-        if (health != 0) health = 0; // Set health to 0
-
-        // Disable gameplayer UI
-        // Enable death UI
+        transform.position = _startingPos;
     }
+    #endregion
 }

@@ -1,11 +1,21 @@
+using UnityEditor.EditorTools;
 using UnityEngine;
 
 public class BlockSpawner : MonoBehaviour
 {
     // PUBLIC
+    [Header("Spawner Values")]
+    [Tooltip("Time in seconds between spawning a random block.")]
     public float spawnInterval;
+    [Tooltip("Min and Max range on the screen that blocks can spawn from 0-1, left to right.")]
+    public Vector2 screenSpawnLimits;
+    [Tooltip("Chance for each block that is spawned to be hazardous.")]
     [Range(0, 100)] public float hazardousBlockChance;
+    [Tooltip("Min and Max values that each block's Fall Speed can be randomized to.")]
     public Vector2 blockFallSpeedRange = new(1, 1);
+    [Header("Blocks Parents")]
+    [SerializeField] private Transform _normalBlocksParent;
+    [SerializeField] private Transform _hazardousBlocksParent;
 
     // PRIVATE
     private GameObject[] _blocks;
@@ -39,7 +49,7 @@ public class BlockSpawner : MonoBehaviour
         float randVal = Random.Range(0, 100);
 
         // Pick a random spawn point and fall speed
-        Vector2 randomSpawnPoint = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0.1f, 0.9f), 1f, Camera.main.nearClipPlane)) + Vector3.up * 5; // Spawn blocks on a random point on the x axis 5 units above screen height
+        Vector2 randomSpawnPoint = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(screenSpawnLimits.x, screenSpawnLimits.y), 1f, Camera.main.nearClipPlane)) + Vector3.up * 5; // Spawn blocks on a random point on the x axis, 5 units above screen height
         float randomFallSpeed = Random.Range(blockFallSpeedRange.x, blockFallSpeedRange.y);
 
         // Normal
@@ -51,7 +61,7 @@ public class BlockSpawner : MonoBehaviour
             GameObject randomBlock = _blocks[Random.Range(0, _blocks.Length)];
 
             // Instantiate the random block and set its fall speed to the random fall speed
-            GameObject block = Instantiate(randomBlock, randomSpawnPoint, Quaternion.identity);
+            GameObject block = Instantiate(randomBlock, randomSpawnPoint, Quaternion.identity, _normalBlocksParent);
             block.GetComponent<FallingBlock>().fallSpeed = randomFallSpeed;
         }
 
@@ -64,7 +74,7 @@ public class BlockSpawner : MonoBehaviour
             GameObject randomBlock = _hazardousBlocks[Random.Range(0, _hazardousBlocks.Length)];
 
             // Instantiate the random block and set its fall speed to the random fall speed
-            GameObject block = Instantiate(randomBlock, randomSpawnPoint, Quaternion.identity);
+            GameObject block = Instantiate(randomBlock, randomSpawnPoint, Quaternion.identity, _hazardousBlocksParent);
             block.GetComponent<FallingBlock>().fallSpeed = randomFallSpeed;
         }
     }
