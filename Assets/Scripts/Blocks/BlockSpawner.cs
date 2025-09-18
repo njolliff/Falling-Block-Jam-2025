@@ -24,7 +24,7 @@ public class BlockSpawner : MonoBehaviour
 
     void Awake()
     {
-        _blocks = Resources.LoadAll<GameObject>("Prefabs/Blocks");
+        _blocks = Resources.LoadAll<GameObject>("Prefabs/Normal Blocks");
         _hazardousBlocks = Resources.LoadAll<GameObject>("Prefabs/Hazardous Blocks");
     }
 

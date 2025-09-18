@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Wall
+  - Death Box
   layers:
   - Default
   - TransparentFX
@@ -13,9 +14,9 @@ TagManager:
   - Player
   - Water
   - UI
-  - Ground
-  - Wall
   - Block
+  - Hazard
+  - Death Box
   - 
   - 
   - 

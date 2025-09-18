@@ -43,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         MovePlayer();
+        
         LimitVelocity();
     }
     #endregion
@@ -124,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
 
         // Set the ray direction, length, and layer mask
         Vector2 rayDirection = Vector2.down;
-        LayerMask groundLayer = LayerMask.GetMask("Ground");
+        LayerMask groundLayer = LayerMask.GetMask("Block");
         float rayLength = 0.05f;
 
         // Do the raycasts
@@ -165,7 +166,7 @@ public class PlayerMovement : MonoBehaviour
         // Determine the rays' direction and set their length
         Vector2 rayDirection = facingRight ? Vector2.right : Vector2.left;
         float rayLength = 0.3f;
-        LayerMask wallLayer = LayerMask.GetMask("Wall");
+        LayerMask wallLayer = LayerMask.GetMask("Block");
 
         // Do the raycasts
         RaycastHit2D upperHit = Physics2D.Raycast(upperRayOrigin, rayDirection, rayLength, wallLayer);
