@@ -1087,8 +1087,9 @@ GameObject:
   - component: {fileID: 409092103}
   - component: {fileID: 409092102}
   - component: {fileID: 409092101}
+  - component: {fileID: 409092104}
   m_Layer: 6
-  m_Name: Ground
+  m_Name: Starting Platform
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1186,7 +1187,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.5188679, g: 0.26737854, b: 0, a: 1}
   m_FlipX: 0
@@ -1213,6 +1214,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1308514056}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &409092104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409092100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 759fea469366d134b8e9bb88e2462d57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  _collider: {fileID: 409092101}
+  _spriteRenderer: {fileID: 409092102}
+  isDeathBox: 0
 --- !u!224 &467876960 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5529394428703978430, guid: 52422f2acd37882499887ddb322fb649, type: 3}
@@ -3571,17 +3587,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6e1cc937ddf98d4bb57610a6eda475a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  _startingPlatform: {fileID: 409092100}
+  _startingPlatform: {fileID: 409092104}
   _playerInput: {fileID: 1989527846}
   _rb: {fileID: 1989527847}
   _collider: {fileID: 1241644139}
-  moveSpeed: 10
-  maxVelocity: 8
-  jumpStrength: 5
+  moveSpeed: 25
+  maxVelocity: {x: 5, y: 8}
+  jumpStrength: 15
   wallJumpStrength: 2
   dashStrength: 10
-  dashCooldown: 0.75
-  dashDuration: 0.5
+  dashCooldown: 0.5
+  dashDuration: 0.25
   movementInput: {x: 0, y: 0}
   strongestInput: {x: 0, y: 0}
   grounded: 0
@@ -3632,7 +3648,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 2
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -3676,6 +3692,7 @@ MonoBehaviour:
   health: 3
   height: 0
   isAlive: 1
+  startingPos: {x: 0, y: 0, z: 0}
 --- !u!1 &1993517535
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,10 +25,10 @@ public class FallingBlock : MonoBehaviour
         if (_physicsCollider is PolygonCollider2D polygonCollider)
         {
             if (polygonCollider == null) return;
-            if (IsBelowScreen(GetHighestPoint(polygonCollider))) Destroy(gameObject);
+            if (IsBelowStartingPoint(GetHighestPoint(polygonCollider))) Destroy(gameObject);
         }
         // If not using a polygon collider, use Collider2D.bounds.max
-        else if (IsBelowScreen(_physicsCollider.bounds.max)) Destroy(gameObject);
+        else if (IsBelowStartingPoint(_physicsCollider.bounds.max)) Destroy(gameObject);
     }
     private void Fall()
     {
@@ -49,13 +49,10 @@ public class FallingBlock : MonoBehaviour
 
         return maxPoint;
     }
-    private bool IsBelowScreen(Vector3 pos)
+    private bool IsBelowStartingPoint(Vector3 pos)
     {
-        // Get the position relative to the camera's screen space
-        Vector3 cameraViewportPos = Camera.main.WorldToViewportPoint(pos);
-
-        // Return true if the object is in below the vertical space of the screen
-        if (cameraViewportPos.y < 0) return true;
+        // Return true if the position is below the player's starting point - 1
+        if (pos.y < PlayerController.Instance.startingPos.y - 1) return true;
 
         // Return false otherwise
         return false;
